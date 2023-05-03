@@ -29,7 +29,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
-    public Map<String, String> handlerInternalException(final DublicateException e) {
+    public Map<String, String> handlerDublicateException(final DublicateException e) {
         log.info("Ошибка 409: {}", e.getMessage());
         return Map.of("Ошибка - конфликт данных", e.getMessage());
     }
