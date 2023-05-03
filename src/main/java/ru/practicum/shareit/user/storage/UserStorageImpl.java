@@ -60,7 +60,7 @@ public class UserStorageImpl implements UserStorage {
     }
 
     private void checkId(Long id) {
-        if (id != 0 && !users.containsKey(id)) {
+        if (!users.containsKey(id)) {
             log.info("Пользователь с  id: {} не найден", id);
             throw new NotFoundException("Пользователь с id " +
                     id + " не найден!");

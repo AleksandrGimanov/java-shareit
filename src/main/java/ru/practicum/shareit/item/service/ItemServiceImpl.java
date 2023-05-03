@@ -30,7 +30,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item updateItem(Item item, long userId, long itemId) {
-        getItemById(itemId);
         if (getItemById(itemId).getOwner() != userId) {
             throw new NotFoundException("Пользователь не найден");
         }
@@ -39,7 +38,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void deleteItem(long itemId) {
-        getItemById(itemId);
         itemStorage.deleteItem(itemId);
     }
 

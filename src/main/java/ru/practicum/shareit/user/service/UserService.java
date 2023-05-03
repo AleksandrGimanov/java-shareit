@@ -2,7 +2,7 @@ package ru.practicum.shareit.user.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.practicum.shareit.exception.EmailException;
+import ru.practicum.shareit.exception.DublicateException;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.storage.UserStorage;
 
@@ -27,13 +27,11 @@ public class UserService {
     }
 
     public User updateUser(User user) {
-        getUserById(user.getId());
         checkEmail(user);
         return userStorage.updateUser(user);
     }
 
     public void deleteUser(long id) {
-        getUserById(id);
         userStorage.deleteUser(id);
     }
 
@@ -44,7 +42,7 @@ public class UserService {
                                 && stored.getId() != user.getId()
                 )
         ) {
-            throw new EmailException("Пользователь с таким адресом Эл. почты " +
+            throw new DublicateException("Пользователь с таким адресом Эл. почты " +
                     user.getEmail() + " уже существует!");
         }
     }

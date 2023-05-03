@@ -26,4 +26,11 @@ public class ErrorHandler {
         log.info("Ошибка 500: {}", e.getMessage());
         return Map.of("Ошибка сервера", e.getMessage());
     }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Map<String, String> handlerInternalException(final DublicateException e) {
+        log.info("Ошибка 409: {}", e.getMessage());
+        return Map.of("Ошибка - конфликт данных", e.getMessage());
+    }
 }
