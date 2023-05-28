@@ -3,6 +3,7 @@ package ru.practicum.shareit.booking.dto;
 import lombok.Builder;
 import lombok.Data;
 import ru.practicum.shareit.booking.model.BookingStatus;
+import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
 import javax.validation.constraints.Future;
@@ -27,6 +28,8 @@ public class BookingDto {
 
     @NotNull
     private long itemId;
+
+    private Item item;
 
     private User booker;
 

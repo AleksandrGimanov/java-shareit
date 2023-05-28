@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.dto.ItemDtoWithBookings;
 import ru.practicum.shareit.item.dto.ItemDtoWithComments;
 import ru.practicum.shareit.item.mapper.CommentMapper;
 import ru.practicum.shareit.item.mapper.ItemMapper;
@@ -43,23 +42,21 @@ public class ItemController {
     }
 
     @DeleteMapping("/{itemId}")
-    public void deleteItem(@RequestHeader("X-Sharer-User-Id") long userId,
-                           @PathVariable long itemId) {
+    public void deleteItem(@PathVariable long itemId) {
         itemService.deleteItem(itemId);
     }
 
     @GetMapping("/search")
-    public List<ItemDto> getItemsByText(@RequestHeader("X-Sharer-User-Id") long userId,
-                                        @RequestParam String text) {
+    public List<ItemDto> getItemsByText(@RequestParam String text) {
         return itemService.getItemsByText(text).stream()
                 .map(itemMapper::toItemDto)
                 .collect(Collectors.toList());
     }
 
     @GetMapping
-    public List<ItemDtoWithBookings> getAllItemsByUserId(@RequestHeader("X-Sharer-User-Id") long userId) {
+    public List<ItemDtoWithComments> getAllItemsByUserId(@RequestHeader("X-Sharer-User-Id") long userId) {
         return itemService.getAllItemsByUserId(userId).stream()
-                .map(itemMapper::toItemDtoWithBookings)
+                .map(itemMapper::toItemDtoWithComments)
                 .collect(Collectors.toList());
     }
 
