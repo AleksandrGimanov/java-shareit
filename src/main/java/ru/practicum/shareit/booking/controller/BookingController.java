@@ -28,36 +28,36 @@ public class BookingController {
 
     @PostMapping
     public BookingDto createBooking(@RequestHeader("X-Sharer-User-Id") long userId,
-                                 @Valid @RequestBody BookingDto bookingDto) {
+                                    @Valid @RequestBody BookingDto bookingDto) {
         return bookingMapper.toBookingDto(bookingServiceImpl.createBooking(bookingMapper.toBooking(bookingDto), userId));
     }
 
     @PatchMapping("/{bookingId}")
     public BookingDto approvedBooking(@RequestHeader("X-Sharer-User-Id") long userId,
-                                   @PathVariable long bookingId,
-                                   @RequestParam boolean approved) {
+                                      @PathVariable long bookingId,
+                                      @RequestParam boolean approved) {
         return bookingMapper.toBookingDto(bookingServiceImpl.approvedBooking(userId, bookingId, approved));
     }
 
     @GetMapping("/{bookingId}")
     public BookingDto getBookingById(@RequestHeader("X-Sharer-User-Id") long userId,
-                                  @PathVariable long bookingId) {
+                                     @PathVariable long bookingId) {
         return bookingMapper.toBookingDto(bookingServiceImpl.getBookingById(bookingId, userId));
     }
 
     @GetMapping
     public List<BookingDto> getBookingsByBookerId(@RequestHeader("X-Sharer-User-Id") long userId,
-                                               @RequestParam(defaultValue = "ALL", required = false) String state) {
+                                                  @RequestParam(defaultValue = "ALL", required = false) String state) {
         return bookingServiceImpl.getAllBookingsByBookerIdAndState(userId, state).stream()
-                .map(bookingMapper :: toBookingDto)
+                .map(bookingMapper::toBookingDto)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/owner")
     public List<BookingDto> getBookingsByItemsOwnerId(@RequestHeader("X-Sharer-User-Id") long userId,
-                                                   @RequestParam(defaultValue = "ALL", required = false) String state) {
+                                                      @RequestParam(defaultValue = "ALL", required = false) String state) {
         return bookingServiceImpl.getAllBookingsByOwnerIdAndState(userId, state).stream()
-                .map(bookingMapper :: toBookingDto)
+                .map(bookingMapper::toBookingDto)
                 .collect(Collectors.toList());
     }
 }
