@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.mapper.UserMapper;
-import ru.practicum.shareit.user.service.UserService;
+import ru.practicum.shareit.user.service.UserServiceImpl;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -22,18 +22,18 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "/users")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable Long id) {
 
-        return UserMapper.toUserDto(userService.getUserById(id));
+        return UserMapper.toUserDto(userServiceImpl.getUserById(id));
     }
 
     @GetMapping
     public List<UserDto> getAllUsers() {
 
-        return userService.getAllUsers().stream()
+        return userServiceImpl.getAllUsers().stream()
                 .map(UserMapper::toUserDto)
                 .collect(Collectors.toList());
     }
@@ -41,19 +41,19 @@ public class UserController {
     @PostMapping
     public UserDto createUser(@Valid @RequestBody UserDto userDto) {
 
-        return UserMapper.toUserDto(userService.createUser(UserMapper.toUser(userDto)));
+        return UserMapper.toUserDto(userServiceImpl.createUser(UserMapper.toUser(userDto)));
     }
 
     @PatchMapping("/{userId}")
     public UserDto updateUser(@RequestBody UserDto userDto,
                               @PathVariable Long userId) {
         userDto.setId(userId);
-        return UserMapper.toUserDto(userService.updateUser(UserMapper.toUser(userDto)));
+        return UserMapper.toUserDto(userServiceImpl.updateUser(UserMapper.toUser(userDto)));
     }
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
 
-        userService.deleteUser(id);
+        userServiceImpl.deleteUser(id);
     }
 }
